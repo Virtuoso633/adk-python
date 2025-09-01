@@ -16,16 +16,25 @@
 
 from .base_llm import BaseLlm
 from .google_llm import Gemini
-from .llm_request import LlmRequest
+from .anthropic_llm import Claude
+from .lite_llm import LiteLlm 
 from .llm_response import LlmResponse
 from .registry import LLMRegistry
 
 __all__ = [
     'BaseLlm',
     'Gemini',
+    'Claude',  
+    'LiteLlm',
     'LLMRegistry',
 ]
 
-
+# Register all supported model classes with the registry
 for regex in Gemini.supported_models():
   LLMRegistry.register(Gemini)
+
+for regex in Claude.supported_models():  
+  LLMRegistry.register(Claude)
+
+for regex in LiteLlm.supported_models():
+  LLMRegistry.register(LiteLlm)

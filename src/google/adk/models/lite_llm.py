@@ -918,16 +918,35 @@ class LiteLlm(BaseLlm):
       response = await self.llm_client.acompletion(**completion_args)
       yield _model_response_to_generate_content_response(response)
 
+  # @classmethod
+  # @override
+  # def supported_models(cls) -> list[str]:
+  #   """Provides the list of supported models.
+
+  #   LiteLlm supports all models supported by litellm. We do not keep track of
+  #   these models here. So we return an empty list.
+
+  #   Returns:
+  #     A list of supported models.
+  #   """
+
+  #   return []
+
+
   @classmethod
   @override
   def supported_models(cls) -> list[str]:
-    """Provides the list of supported models.
+    """Provides the list of supported models for LiteLlm.
 
-    LiteLlm supports all models supported by litellm. We do not keep track of
-    these models here. So we return an empty list.
+    This registers common provider prefixes. LiteLlm can handle many more,
+    but these patterns activate the integration for the most common use cases.
+    See https://docs.litellm.ai/docs/providers for a full list.
 
     Returns:
-      A list of supported models.
+      A list of supported model patterns.
     """
-
-    return []
+    return [
+        r"openai/.*",  # For OpenAI models (e.g., "openai/gpt-4o")
+        r"groq/.*",    # For Grok models via Groq API (e.g., "groq/llama3-70b-8192")
+        r"anthropic/.*", # For Anthropic models via their API (e.g., "anthropic/claude-3-opus-20240229")
+    ]
