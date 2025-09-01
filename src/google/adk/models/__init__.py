@@ -17,7 +17,8 @@
 from .base_llm import BaseLlm
 from .google_llm import Gemini
 from .anthropic_llm import Claude
-from .lite_llm import LiteLlm 
+from .lite_llm import LiteLlm
+from .llm_request import LlmRequest
 from .llm_response import LlmResponse
 from .registry import LLMRegistry
 
